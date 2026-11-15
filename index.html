@@ -274,6 +274,85 @@
       background: linear-gradient(90deg, transparent 0%, rgba(230, 225, 218, 0.12) 20%, rgba(143, 20, 25, 0.55) 50%, rgba(230, 225, 218, 0.12) 80%, transparent 100%);
     }
 
+    /* Fullscreen Coming Soon Ritual Rings & Effects */
+    @keyframes slowSpin3D {
+      0% { transform: translate(-50%, -50%) rotateX(62deg) rotateZ(0deg); }
+      100% { transform: translate(-50%, -50%) rotateX(62deg) rotateZ(360deg); }
+    }
+
+    @keyframes slowSpinReverse3D {
+      0% { transform: translate(-50%, -50%) rotateX(62deg) rotateZ(360deg); }
+      100% { transform: translate(-50%, -50%) rotateX(62deg) rotateZ(0deg); }
+    }
+
+    .ritual-ring-1 {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: min(560px, 85vw);
+      height: min(560px, 85vw);
+      border-radius: 9999px;
+      border: 1px dashed rgba(185, 28, 34, 0.35);
+      box-shadow: 0 0 80px rgba(143, 20, 25, 0.2), inset 0 0 60px rgba(143, 20, 25, 0.15);
+      animation: slowSpin3D 24s linear infinite;
+      pointer-events: none;
+    }
+
+    .ritual-ring-2 {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: min(400px, 65vw);
+      height: min(400px, 65vw);
+      border-radius: 9999px;
+      border: 1px solid rgba(201, 130, 54, 0.22);
+      animation: slowSpinReverse3D 16s linear infinite;
+      pointer-events: none;
+    }
+
+    .ritual-ring-3 {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: min(740px, 95vw);
+      height: min(740px, 95vw);
+      border-radius: 9999px;
+      border: 1px solid rgba(143, 20, 25, 0.28);
+      box-shadow: 0 0 120px rgba(143, 20, 25, 0.25);
+      animation: slowSpin3D 32s linear infinite;
+      pointer-events: none;
+    }
+
+    .coming-soon-char {
+      display: inline-block;
+      color: #F5F2EB;
+      text-shadow:
+        0 2px 10px rgba(0, 0, 0, 0.95),
+        0 0 28px rgba(185, 28, 34, 0.75),
+        0 8px 35px rgba(143, 20, 25, 0.9);
+      transform-style: preserve-3d;
+      will-change: transform, opacity;
+    }
+
+    @keyframes crimsonPulse {
+      0%, 100% {
+        text-shadow:
+          0 2px 10px rgba(0, 0, 0, 0.95),
+          0 0 22px rgba(185, 28, 34, 0.65),
+          0 8px 30px rgba(143, 20, 25, 0.8);
+      }
+      50% {
+        text-shadow:
+          0 2px 15px rgba(0, 0, 0, 0.95),
+          0 0 42px rgba(220, 38, 38, 0.95),
+          0 0 80px rgba(201, 130, 54, 0.45);
+      }
+    }
+
+    .pulse-horror-glow {
+      animation: crimsonPulse 3.2s ease-in-out infinite;
+    }
+
     /* Custom Scrollbar */
     ::-webkit-scrollbar {
       width: 6px;
@@ -288,13 +367,23 @@
 </head>
 <body class="antialiased selection:bg-arterial selection:text-white">
 
+  <!-- Reusable SVG Symbols for Optimized DOM Performance -->
+  <svg class="hidden" aria-hidden="true">
+    <symbol id="icon-instagram" viewBox="0 0 24 24">
+      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+    </symbol>
+    <symbol id="icon-download" viewBox="0 0 24 24">
+      <path stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" d="M12 3v13m0 0l-4.5-4.5M12 16l4.5-4.5M4 20h16"/>
+    </symbol>
+  </svg>
+
   <div class="horror-grain"></div>
 
   <!-- ====================================================
        NAVIGATION BAR (FROSTED GLASS STUDIO HEADER)
   ===================================================== -->
   <header class="fixed top-0 left-0 right-0 z-50 bg-pitch/55 backdrop-blur-2xl border-b border-white/[0.08] shadow-[0_10px_30px_rgba(0,0,0,0.6)]">
-    <nav class="max-w-7xl mx-auto px-6 sm:px-10 h-20 flex items-center justify-between">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-10 h-20 flex items-center justify-between">
       <!-- Studio Brand -->
       <a href="#hero" class="flex items-center gap-3.5 group">
         <div class="w-11 h-11 rounded-lg bg-black/80 border border-white/15 overflow-hidden flex-shrink-0 group-hover:border-white/40 transition shadow-lg">
@@ -315,25 +404,34 @@
       </a>
 
       <!-- Center Studio Sections -->
-      <div class="hidden md:flex items-center gap-9 text-xs font-medium tracking-[0.2em] uppercase text-ash">
+      <div class="hidden lg:flex items-center gap-9 text-xs font-medium tracking-[0.2em] uppercase text-ash">
         <a href="#the-last-shift" class="hover:text-bone transition duration-200">The Last Shift</a>
         <a href="#screenshots" class="hover:text-bone transition duration-200">Media</a>
         <a href="#studio" class="hover:text-bone transition duration-200">Studio</a>
         <a href="#community" class="hover:text-ember transition duration-200">Community</a>
       </div>
 
-      <!-- Right Social Promotion Button -->
-      <a
-        href="https://www.instagram.com/omnexis_x"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="btn-horror !py-2.5 !px-4 !text-[11px] rounded"
-      >
-        <svg class="w-4 h-4 text-ember relative z-10" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-        </svg>
-        <span class="relative z-10">@omnexis_x</span>
-      </a>
+      <!-- Top-Right Action Group: Download Button + Instagram -->
+      <div class="flex items-center gap-2.5 sm:gap-3.5">
+        <a
+          href="https://www.instagram.com/omnexis_x"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-horror-ghost !py-2.5 !px-3.5 !text-[11px] rounded hidden sm:inline-flex"
+        >
+          <svg class="w-4 h-4 text-ember"><use href="#icon-instagram"></use></svg>
+          <span>@omnexis_x</span>
+        </a>
+
+        <button
+          type="button"
+          onclick="openDownloadModal()"
+          class="btn-horror !py-2.5 !px-4 sm:!px-5 !text-[11px] rounded cursor-pointer"
+        >
+          <svg class="w-4 h-4 text-ember relative z-10"><use href="#icon-download"></use></svg>
+          <span class="relative z-10">Download</span>
+        </button>
+      </div>
     </nav>
   </header>
 
@@ -368,22 +466,22 @@
             When the final hour arrives, silence becomes your only witness. Enter a grounded 3D psychological horror experience where every shadow hides what was meant to stay buried.
           </p>
 
-          <!-- Horror-Styled Action Buttons -->
+          <!-- Horror-Styled Action Buttons (Including Primary Website Download Button) -->
           <div class="flex flex-wrap items-center gap-4 pt-2">
+            <button
+              type="button"
+              onclick="openDownloadModal()"
+              class="btn-horror rounded cursor-pointer"
+            >
+              <svg class="w-4 h-4 text-ember relative z-10"><use href="#icon-download"></use></svg>
+              <span class="relative z-10">Download Game</span>
+            </button>
             <a
               href="#screenshots"
-              class="btn-horror rounded"
-            >
-              <span class="relative z-10">Explore The World</span>
-              <span class="text-ember relative z-10">→</span>
-            </a>
-            <a
-              href="https://www.instagram.com/omnexis_x"
-              target="_blank"
-              rel="noopener noreferrer"
               class="btn-horror-ghost rounded"
             >
-              <span>Follow Updates ↗</span>
+              <span>Explore The World</span>
+              <span class="text-ember">→</span>
             </a>
           </div>
         </div>
@@ -405,6 +503,7 @@
                 <img
                   src="game_logo.jpg"
                   alt="The Last Shift Official Logo"
+                  fetchpriority="high"
                   class="w-full h-full object-cover"
                 />
                 <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent"></div>
@@ -568,6 +667,8 @@
               <img
                 src="screenshot1.jpg"
                 alt="Into The Mist"
+                loading="lazy"
+                decoding="async"
                 class="w-full h-full object-cover group-hover:scale-105 transition duration-700"
               />
               <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent"></div>
@@ -593,6 +694,8 @@
               <img
                 src="screenshot2.jpg"
                 alt="The Forest Road"
+                loading="lazy"
+                decoding="async"
                 class="w-full h-full object-cover group-hover:scale-105 transition duration-700"
               />
               <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent"></div>
@@ -618,6 +721,8 @@
               <img
                 src="screenshot3.jpg"
                 alt="The Victorian Estate"
+                loading="lazy"
+                decoding="async"
                 class="w-full h-full object-cover group-hover:scale-105 transition duration-700"
               />
               <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent"></div>
@@ -643,6 +748,8 @@
               <img
                 src="screenshot4.jpg"
                 alt="The Threshold"
+                loading="lazy"
+                decoding="async"
                 class="w-full h-full object-cover group-hover:scale-105 transition duration-700"
               />
               <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent"></div>
@@ -680,6 +787,8 @@
                 <img
                   src="company_logo.jpg"
                   alt="OmNexis-X Studio Logo"
+                  loading="lazy"
+                  decoding="async"
                   class="w-full h-full object-cover rounded-lg"
                 />
               </div>
@@ -753,18 +862,24 @@
                 Follow <strong class="text-bone">@omnexis_x</strong> for exclusive behind-the-scenes development updates, visual reveals, teaser drops, and official studio announcements for <span class="text-bone italic">The Last Shift</span>.
               </p>
 
-              <div class="pt-2">
+              <div class="pt-2 flex flex-wrap items-center gap-4">
                 <a
                   href="https://www.instagram.com/omnexis_x"
                   target="_blank"
                   rel="noopener noreferrer"
                   class="btn-horror rounded"
                 >
-                  <svg class="w-5 h-5 text-ember relative z-10" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                  </svg>
+                  <svg class="w-5 h-5 text-ember relative z-10"><use href="#icon-instagram"></use></svg>
                   <span class="relative z-10">FOLLOW @OMNEXIS_X</span>
                 </a>
+                <button
+                  type="button"
+                  onclick="openDownloadModal()"
+                  class="btn-horror-ghost rounded cursor-pointer"
+                >
+                  <svg class="w-4 h-4 text-ember"><use href="#icon-download"></use></svg>
+                  <span>Download Build</span>
+                </button>
               </div>
             </div>
 
@@ -781,6 +896,8 @@
                     <img
                       src="company_logo.jpg"
                       alt="@omnexis_x"
+                      loading="lazy"
+                      decoding="async"
                       class="w-full h-full object-cover rounded-full bg-black"
                     />
                   </div>
@@ -874,9 +991,104 @@
   </div>
 
   <!-- ====================================================
-       SCRIPTS: 3D ELEMENT ANIMATIONS & SCROLL TRIGGERS
+       FULLSCREEN "COMING SOON" CINEMATIC DOWNLOAD SEQUENCE
+  ===================================================== -->
+  <div
+    id="download-modal"
+    class="fixed inset-0 z-[100] hidden bg-pitch/95 backdrop-blur-3xl overflow-hidden flex flex-col items-center justify-center p-6 stage-3d"
+  >
+    <!-- Ambient Crimson Fog & 3D Ritual Rings -->
+    <div id="dl-ambient-glow" class="absolute inset-0 pointer-events-none opacity-0" style="background: radial-gradient(circle at 50% 50%, rgba(143, 20, 25, 0.34) 0%, rgba(6, 6, 7, 0.97) 70%);"></div>
+
+    <!-- Expanding Crimson Shockwave Ring -->
+    <div id="dl-shockwave" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-full border-2 border-ember/80 shadow-[0_0_90px_rgba(185,28,34,0.9)] pointer-events-none opacity-0"></div>
+
+    <div id="dl-rings" class="absolute inset-0 pointer-events-none opacity-0 stage-3d">
+      <div class="ritual-ring-1"></div>
+      <div class="ritual-ring-2"></div>
+      <div class="ritual-ring-3"></div>
+    </div>
+
+    <!-- Top-Right Close Button -->
+    <button
+      type="button"
+      onclick="closeDownloadModal()"
+      class="absolute top-6 right-6 sm:top-8 sm:right-10 z-30 btn-horror-ghost !py-2 !px-4 !text-xs rounded cursor-pointer"
+    >
+      <span>Close [ESC]</span>
+    </button>
+
+    <!-- Center 3D Sequence Stage -->
+    <div id="dl-stage-card" class="relative z-20 max-w-4xl w-full text-center space-y-7 stage-3d">
+
+      <!-- Floating 3D Dual Emblem (Studio + Game) -->
+      <div id="dl-emblem" class="mx-auto w-28 h-28 sm:w-36 sm:h-36 rounded-2xl p-1.5 frosted-glass relative opacity-0 ambient-float-3d">
+        <img
+          src="game_logo.jpg"
+          alt="The Last Shift"
+          class="w-full h-full object-cover rounded-xl border border-white/15 shadow-[0_0_55px_rgba(185,28,34,0.75)]"
+        />
+        <img
+          src="company_logo.jpg"
+          alt="OmNexis-X"
+          class="w-10 h-10 rounded-lg object-cover border border-white/30 absolute -bottom-3 -right-3 shadow-xl bg-black"
+        />
+      </div>
+
+      <!-- Dramatic 3D "COMING SOON" Reveal -->
+      <div id="dl-reveal-box" class="space-y-5">
+        <div id="dl-badge" class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded frosted-glass opacity-0">
+          <span class="w-2 h-2 rounded-full bg-ember animate-ping"></span>
+          <span class="text-[10px] sm:text-xs font-orbitron tracking-[0.28em] uppercase text-ember">
+            OMNEXIS-X • THE LAST SHIFT
+          </span>
+        </div>
+
+        <!-- Hardcoded 3D Character Spans for Guaranteed Rendering -->
+        <h2
+          id="dl-coming-soon-title"
+          aria-label="COMING SOON"
+          class="font-cinzel font-black text-4xl sm:text-7xl md:text-8xl tracking-[0.14em] sm:tracking-[0.2em] leading-none pulse-horror-glow select-none py-2 stage-3d"
+        >
+          <span class="coming-soon-char">C</span><span class="coming-soon-char">O</span><span class="coming-soon-char">M</span><span class="coming-soon-char">I</span><span class="coming-soon-char">N</span><span class="coming-soon-char">G</span><span class="inline-block w-4 sm:w-8"></span><span class="coming-soon-char text-ember">S</span><span class="coming-soon-char text-ember">O</span><span class="coming-soon-char text-ember">O</span><span class="coming-soon-char text-ember">N</span>
+        </h2>
+
+        <!-- Expanding Crimson Bloodline Divider -->
+        <div id="dl-divider" class="h-[2px] w-full max-w-md mx-auto bg-gradient-to-r from-transparent via-ember to-transparent shadow-[0_0_20px_#B91C22] scale-x-0"></div>
+
+        <p id="dl-coming-soon-desc" class="text-bone/90 text-sm sm:text-base max-w-xl mx-auto leading-relaxed opacity-0">
+          The standalone Windows PC build of <strong class="text-white">The Last Shift</strong> is currently sealed inside the <strong class="text-white">OmNexis-X</strong> vault. Follow our official Instagram dispatch to witness the final reveals before the shift begins.
+        </p>
+
+        <div id="dl-actions" class="pt-3 flex flex-wrap items-center justify-center gap-4 opacity-0">
+          <a
+            href="https://www.instagram.com/omnexis_x"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-horror rounded"
+          >
+            <svg class="w-4 h-4 text-ember relative z-10"><use href="#icon-instagram"></use></svg>
+            <span class="relative z-10">Follow @omnexis_x For Release</span>
+          </a>
+          <button
+            type="button"
+            onclick="closeDownloadModal()"
+            class="btn-horror-ghost rounded cursor-pointer"
+          >
+            <span>Return To Showcase</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ====================================================
+       SCRIPTS: OPTIMIZED 3D ANIMATIONS & DOWNLOAD TIMELINE
   ===================================================== -->
   <script>
+    let downloadTimeline = null;
+
     document.addEventListener('DOMContentLoaded', () => {
       gsap.registerPlugin(ScrollTrigger);
 
@@ -891,7 +1103,7 @@
         { opacity: 1, y: 0, z: 0, rotateY: 0, rotateX: 0, scale: 1, duration: 1.4, ease: 'power3.out', delay: 0.15 }
       );
 
-      // 2. Hero 3D Scroll Parallax (Scrubs in 3D space as user scrolls down)
+      // 2. Hero 3D Scroll Parallax
       gsap.to('.hero-3d-poster', {
         rotateY: 16,
         rotateX: -12,
@@ -956,7 +1168,7 @@
         );
       });
 
-      // 5. 3D Pillar Cards Scroll Animation (Deep 3D Perspective Flip-Up)
+      // 5. 3D Pillar Cards Scroll Animation
       gsap.fromTo('.scroll-3d-card',
         {
           opacity: 0,
@@ -1042,8 +1254,14 @@
         );
       });
 
-      // 8. Multi-Layer 3D Mouse Tilt + Internal Z-Layer Parallax on Every .interactive-tilt Card
+      // 8. Hardware-Optimized 3D Mouse Tilt using gsap.quickTo()
       document.querySelectorAll('.interactive-tilt').forEach((card) => {
+        gsap.set(card, { transformPerspective: 1600 });
+
+        const qRotX = gsap.quickTo(card, 'rotateX', { duration: 0.35, ease: 'power2.out' });
+        const qRotY = gsap.quickTo(card, 'rotateY', { duration: 0.35, ease: 'power2.out' });
+        const qZ = gsap.quickTo(card, 'z', { duration: 0.35, ease: 'power2.out' });
+
         const layer1 = card.querySelectorAll('.depth-layer-1');
         const layer2 = card.querySelectorAll('.depth-layer-2');
         const layer3 = card.querySelectorAll('.depth-layer-3');
@@ -1059,59 +1277,141 @@
           const normX = (x / rect.width) - 0.5;
           const normY = (y / rect.height) - 0.5;
 
-          const rotateY = normX * 18;
-          const rotateX = normY * -18;
+          qRotY(normX * 18);
+          qRotX(normY * -18);
+          qZ(18);
 
-          gsap.to(card, {
-            rotateX: rotateX,
-            rotateY: rotateY,
-            z: 18,
-            duration: 0.35,
-            ease: 'power2.out',
-            transformPerspective: 1600
-          });
-
-          if (layer1.length) {
-            gsap.to(layer1, { x: normX * 10, y: normY * 10, duration: 0.35, ease: 'power2.out' });
-          }
-          if (layer2.length) {
-            gsap.to(layer2, { x: normX * 20, y: normY * 20, duration: 0.35, ease: 'power2.out' });
-          }
-          if (layer3.length) {
-            gsap.to(layer3, { x: normX * 30, y: normY * 30, duration: 0.35, ease: 'power2.out' });
-          }
-        });
+          if (layer1.length) gsap.to(layer1, { x: normX * 10, y: normY * 10, duration: 0.35, overwrite: 'auto' });
+          if (layer2.length) gsap.to(layer2, { x: normX * 20, y: normY * 20, duration: 0.35, overwrite: 'auto' });
+          if (layer3.length) gsap.to(layer3, { x: normX * 30, y: normY * 30, duration: 0.35, overwrite: 'auto' });
+        }, { passive: true });
 
         card.addEventListener('mouseleave', () => {
-          gsap.to(card, {
-            rotateX: 0,
-            rotateY: 0,
-            z: 0,
-            duration: 0.75,
-            ease: 'power3.out'
-          });
+          qRotX(0);
+          qRotY(0);
+          qZ(0);
           gsap.to([layer1, layer2, layer3], {
             x: 0,
             y: 0,
-            duration: 0.75,
-            ease: 'power3.out'
+            duration: 0.7,
+            ease: 'power3.out',
+            overwrite: 'auto'
           });
         });
       });
 
       window.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'Escape') {
+          closeLightbox();
+          closeDownloadModal();
+        }
       });
     });
+
+    // Fullscreen "Coming Soon" 3D Horror Reveal Animation (No Loading Bar)
+    function openDownloadModal() {
+      const modal = document.getElementById('download-modal');
+      const chars = modal.querySelectorAll('.coming-soon-char');
+
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+
+      if (downloadTimeline) downloadTimeline.kill();
+
+      downloadTimeline = gsap.timeline();
+
+      // Reset initial states cleanly
+      gsap.set('#dl-shockwave', { scale: 0.2, opacity: 0.95 });
+      gsap.set('#dl-divider', { scaleX: 0, opacity: 1 });
+
+      downloadTimeline
+        // 1. Ignite crimson atmosphere & expand shockwave ring
+        .fromTo('#dl-ambient-glow',
+          { opacity: 0, scale: 0.8 },
+          { opacity: 1, scale: 1, duration: 1.0, ease: 'power2.out' }
+        )
+        .to('#dl-shockwave',
+          { scale: 14, opacity: 0, duration: 1.8, ease: 'expo.out' },
+          0
+        )
+        // 2. Unfold 3D ritual rings in perspective
+        .fromTo('#dl-rings',
+          { opacity: 0, scale: 0.45, rotateX: 65, rotateZ: -45 },
+          { opacity: 1, scale: 1, rotateX: 0, rotateZ: 0, duration: 1.8, ease: 'expo.out' },
+          0.1
+        )
+        // 3. 3D Flip-in of the Game & Studio Emblem
+        .fromTo('#dl-emblem',
+          { opacity: 0, y: -70, z: -300, rotateY: 180, rotateX: 35, scale: 0.5 },
+          { opacity: 1, y: 0, z: 0, rotateY: 0, rotateX: 0, scale: 1, duration: 1.4, ease: 'back.out(1.4)' },
+          0.15
+        )
+        // 4. Reveal Studio Transmission Badge
+        .fromTo('#dl-badge',
+          { opacity: 0, y: 25, scale: 0.8 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: 'back.out(1.7)' },
+          0.55
+        )
+        // 5. Dramatic 3D Letter-by-Letter Unfold of "COMING SOON"
+        .fromTo(chars,
+          {
+            opacity: 0,
+            y: 90,
+            z: -350,
+            rotateX: -95,
+            rotateY: 35,
+            scale: 0.4
+          },
+          {
+            opacity: 1,
+            y: 0,
+            z: 0,
+            rotateX: 0,
+            rotateY: 0,
+            scale: 1,
+            duration: 1.3,
+            stagger: 0.075,
+            ease: 'expo.out'
+          },
+          0.65
+        )
+        // 6. Slash open the crimson bloodline divider
+        .to('#dl-divider',
+          { scaleX: 1, duration: 1.0, ease: 'expo.out' },
+          1.25
+        )
+        // 7. Fade up the description and CTA buttons
+        .fromTo('#dl-coming-soon-desc',
+          { opacity: 0, y: 30 },
+          { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' },
+          1.4
+        )
+        .fromTo('#dl-actions',
+          { opacity: 0, y: 25 },
+          { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' },
+          1.55
+        );
+    }
+
+    function closeDownloadModal() {
+      const modal = document.getElementById('download-modal');
+      if (modal.classList.contains('hidden')) return;
+
+      if (downloadTimeline) downloadTimeline.kill();
+      modal.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
 
     function openLightbox(src, title) {
       document.getElementById('lightbox-img').src = src;
       document.getElementById('lightbox-title').textContent = title;
       document.getElementById('lightbox-modal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
     }
 
     function closeLightbox() {
       document.getElementById('lightbox-modal').classList.add('hidden');
+      document.body.style.overflow = '';
     }
   </script>
 </body>
