@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OMNEXIS-X | THE LAST SHIFT — Official Studio & Game Showcase</title>
+  <meta name="description" content="OmNexis-X — Beyond Limits. Beyond Tomorrow. Official studio portal and showcase for the psychological horror game THE LAST SHIFT." />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Realistic Horror Editorial & Studio Display -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;900&family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+
+  <!-- GSAP & ScrollTrigger for 3D Element Scroll Animations -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            pitch: '#060607',
+            charcoal: '#0D0D0F',
+            slatehorror: '#141418',
+            bone: '#E6E1DA',
+            ash: '#8E8A83',
+            arterial: '#8F1419',
+            ember: '#B91C22',
+            lantern: '#C98236'
+          },
+          fontFamily: {
+            cinzel: ['Cinzel', 'serif'],
+            orbitron: ['Orbitron', 'sans-serif'],
+            sans: ['Inter', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      user-select: none;
+    }
+
+    body {
+      background-color: #060607;
+      color: #E6E1DA;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      background-image:
+        radial-gradient(circle at 20% 15%, rgba(143, 20, 25, 0.14) 0%, transparent 45%),
+        radial-gradient(circle at 80% 45%, rgba(201, 130, 54, 0.06) 0%, transparent 50%),
+        radial-gradient(circle at 50% 85%, rgba(143, 20, 25, 0.1) 0%, transparent 50%);
+    }
+
+    /* Subtle Realistic Horror Film Grain (Static/Clean) */
+    .horror-grain {
+      position: fixed;
+      inset: 0;
+      z-index: 40;
+      pointer-events: none;
+      opacity: 0.028;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    /* 3D Perspective Stage for Scroll & Hover Elements */
+    .stage-3d {
+      perspective: 1600px;
+      transform-style: preserve-3d;
+    }
+
+    /* Frosted Glass Panel Utility */
+    .frosted-glass {
+      background: rgba(14, 14, 18, 0.45);
+      backdrop-filter: blur(20px) saturate(140%);
+      -webkit-backdrop-filter: blur(20px) saturate(140%);
+      border: 1px solid rgba(230, 225, 218, 0.1);
+      box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.75),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    /* Interactive 3D Frosted Glass Card */
+    .card-3d {
+      position: relative;
+      background: linear-gradient(145deg, rgba(22, 22, 28, 0.55) 0%, rgba(9, 9, 12, 0.38) 100%);
+      backdrop-filter: blur(24px) saturate(140%);
+      -webkit-backdrop-filter: blur(24px) saturate(140%);
+      border: 1px solid rgba(230, 225, 218, 0.11);
+      box-shadow:
+        0 30px 60px -15px rgba(0, 0, 0, 0.9),
+        inset 0 1px 1px rgba(255, 255, 255, 0.1);
+      transform-style: preserve-3d;
+      will-change: transform;
+      transition: border-color 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .card-3d:hover {
+      border-color: rgba(185, 28, 34, 0.45);
+      box-shadow:
+        0 45px 90px -15px rgba(0, 0, 0, 0.95),
+        0 0 40px rgba(143, 20, 25, 0.18),
+        inset 0 1px 1px rgba(255, 255, 255, 0.16);
+    }
+
+    /* Dynamic Flashlight Specular Glare Inside 3D Frosted Cards */
+    .card-glare {
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      background: radial-gradient(
+        480px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(230, 225, 218, 0.09),
+        transparent 60%
+      );
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      z-index: 20;
+    }
+
+    .card-3d:hover .card-glare {
+      opacity: 1;
+    }
+
+    /* True 3D Depth Layers Inside Cards */
+    .depth-layer-1 {
+      transform: translateZ(32px);
+      transform-style: preserve-3d;
+    }
+    .depth-layer-2 {
+      transform: translateZ(58px);
+      transform-style: preserve-3d;
+    }
+    .depth-layer-3 {
+      transform: translateZ(85px);
+      transform-style: preserve-3d;
+    }
+
+    /* Continuous Ambient 3D Levitation Animation */
+    @keyframes float3D {
+      0%, 100% {
+        transform: translate3d(0, 0px, 0px) rotateX(0deg) rotateY(0deg);
+      }
+      50% {
+        transform: translate3d(0, -10px, 18px) rotateX(2.5deg) rotateY(-2.5deg);
+      }
+    }
+
+    .ambient-float-3d {
+      animation: float3D 6s ease-in-out infinite;
+      transform-style: preserve-3d;
+    }
+
+    /* Simple Realistic Horror Button (Frosted Dark Glass + Razor Crimson Edge + Corner Ticks) */
+    .btn-horror {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      padding: 0.95rem 2rem;
+      background: rgba(12, 12, 15, 0.65);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      color: #E6E1DA;
+      border: 1px solid rgba(230, 225, 218, 0.18);
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 0.75rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      overflow: hidden;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8), inset 0 0 18px rgba(143, 20, 25, 0.12);
+      transform-style: preserve-3d;
+    }
+
+    /* Subtle Blood-Line Razor Sweep at Bottom of Button */
+    .btn-horror::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #8F1419, #E6E1DA, #8F1419, transparent);
+      transform: scaleX(0.35);
+      opacity: 0.75;
+      transition: transform 0.4s ease, opacity 0.4s ease;
+    }
+
+    /* Eerie Crimson Inner Mist on Hover */
+    .btn-horror::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, rgba(143, 20, 25, 0.28) 0%, transparent 75%);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      pointer-events: none;
+    }
+
+    .btn-horror:hover {
+      border-color: rgba(185, 28, 34, 0.65);
+      color: #FFFFFF;
+      transform: translateY(-2px) translateZ(12px);
+      box-shadow:
+        0 18px 40px rgba(0, 0, 0, 0.95),
+        0 0 25px rgba(143, 20, 25, 0.35),
+        inset 0 0 22px rgba(143, 20, 25, 0.25);
+    }
+
+    .btn-horror:hover::before {
+      transform: scaleX(1);
+      opacity: 1;
+    }
+
+    .btn-horror:hover::after {
+      opacity: 1;
+    }
+
+    /* Secondary Muted Horror Button */
+    .btn-horror-ghost {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      padding: 0.95rem 1.85rem;
+      background: rgba(255, 255, 255, 0.025);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      color: #C7C0B6;
+      border: 1px solid rgba(230, 225, 218, 0.12);
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      font-size: 0.75rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      transition: all 0.35s ease;
+    }
+
+    .btn-horror-ghost:hover {
+      background: rgba(230, 225, 218, 0.06);
+      border-color: rgba(230, 225, 218, 0.35);
+      color: #FFFFFF;
+      transform: translateY(-2px);
+    }
+
+    /* Realistic Worn Bone & Dried Blood Title Treatment */
+    .horror-title {
+      background: linear-gradient(180deg, #F5F2EB 0%, #C7C0B6 55%, #8F1419 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Studio Brushed Steel Text */
+    .studio-chrome {
+      background: linear-gradient(180deg, #FFFFFF 0%, #94A3B8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Subtle Divider Line */
+    .horror-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, rgba(230, 225, 218, 0.12) 20%, rgba(143, 20, 25, 0.55) 50%, rgba(230, 225, 218, 0.12) 80%, transparent 100%);
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #060607;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #8F1419;
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-arterial selection:text-white">
+
+  <div class="horror-grain"></div>
+
+  <!-- ====================================================
+       NAVIGATION BAR (FROSTED GLASS STUDIO HEADER)
+  ===================================================== -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-pitch/55 backdrop-blur-2xl border-b border-white/[0.08] shadow-[0_10px_30px_rgba(0,0,0,0.6)]">
+    <nav class="max-w-7xl mx-auto px-6 sm:px-10 h-20 flex items-center justify-between">
+      <!-- Studio Brand (Actual company_logo.jpg) -->
+      <a href="#hero" class="flex items-center gap-3.5 group">
+        <div class="w-11 h-11 rounded-lg bg-black/80 border border-white/15 overflow-hidden flex-shrink-0 group-hover:border-white/40 transition shadow-lg">
+          <img
+            src="company_logo.jpg"
+            alt="OmNexis-X Logo"
+            class="w-full h-full object-cover"
+          />
+        </div>
+        <div>
+          <span class="font-orbitron font-bold text-sm sm:text-base tracking-[0.22em] text-white block leading-none">
+            OMNEXIS-X
+          </span>
+          <span class="text-[9px] tracking-[0.24em] text-ash uppercase block mt-1">
+            GAME STUDIO
+          </span>
+        </div>
+      </a>
+
+      <!-- Center Studio Sections -->
+      <div class="hidden md:flex items-center gap-9 text-xs font-medium tracking-[0.2em] uppercase text-ash">
+        <a href="#the-last-shift" class="hover:text-bone transition duration-200">The Last Shift</a>
+        <a href="#screenshots" class="hover:text-bone transition duration-200">Media</a>
+        <a href="#studio" class="hover:text-bone transition duration-200">Studio</a>
+        <a href="#community" class="hover:text-ember transition duration-200">Community</a>
+      </div>
+
+      <!-- Right Social Promotion Button (Horror Look) -->
+      <a
+        href="https://www.instagram.com/omnexis_x"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn-horror !py-2.5 !px-4 !text-[11px] rounded"
+      >
+        <svg class="w-4 h-4 text-ember relative z-10" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+        </svg>
+        <span class="relative z-10">@omnexis_x</span>
+      </a>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ====================================================
+         SECTION 1: HERO FLAGSHIP GAME SHOWCASE
+    ===================================================== -->
+    <section id="hero" class="min-h-screen pt-28 pb-16 px-6 sm:px-10 flex flex-col justify-between stage-3d">
+      <div class="max-w-7xl mx-auto w-full my-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-center stage-3d">
+
+        <!-- Left Column: Flagship Announcement & 3D Layered Typography -->
+        <div class="lg:col-span-7 space-y-7 hero-3d-text stage-3d">
+          <div class="inline-flex items-center gap-3 px-4 py-2 rounded-md frosted-glass">
+            <img src="company_logo.jpg" alt="OmNexis-X" class="w-5 h-5 rounded object-cover border border-white/20" />
+            <span class="w-1.5 h-1.5 rounded-full bg-ember animate-pulse"></span>
+            <span class="text-[11px] font-medium tracking-[0.25em] uppercase text-bone/90">
+              OMNEXIS-X • FLAGSHIP HORROR PROJECT
+            </span>
+          </div>
+
+          <div class="space-y-3">
+            <p class="font-cinzel text-xs sm:text-sm tracking-[0.4em] text-lantern uppercase font-semibold">
+              An OmNexis-X Original Horror Experience
+            </p>
+            <h1 class="font-cinzel font-black text-6xl sm:text-8xl xl:text-[6.5rem] tracking-tight leading-[0.9] horror-title drop-shadow-[0_25px_35px_rgba(0,0,0,0.95)]">
+              THE LAST<br />SHIFT
+            </h1>
+          </div>
+
+          <p class="text-ash text-base sm:text-lg max-w-xl leading-relaxed font-normal">
+            When the final hour arrives, silence becomes your only witness. Enter a grounded 3D psychological horror experience where every shadow hides what was meant to stay buried.
+          </p>
+
+          <!-- Horror-Styled Action Buttons -->
+          <div class="flex flex-wrap items-center gap-4 pt-2">
+            <a
+              href="#screenshots"
+              class="btn-horror rounded"
+            >
+              <span class="relative z-10">Explore The World</span>
+              <span class="text-ember relative z-10">→</span>
+            </a>
+            <a
+              href="https://www.instagram.com/omnexis_x"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-horror-ghost rounded"
+            >
+              <span>Follow Updates ↗</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right Column: 3D Interactive Floating Key Art Monolith (Actual game_logo.jpg) -->
+        <div class="lg:col-span-5 flex justify-center stage-3d">
+          <div class="ambient-float-3d w-full max-w-md">
+            <div class="card-3d interactive-tilt rounded-2xl p-4 sm:p-6 w-full hero-3d-poster">
+              <div class="card-glare"></div>
+
+              <!-- Floating Top Tag (3D Z-Layer 2) -->
+              <div class="depth-layer-2 flex items-center justify-between text-[10px] tracking-[0.25em] uppercase text-ash mb-3.5 px-1">
+                <span>OFFICIAL KEY ART</span>
+                <span class="text-ember font-semibold">OMNEXIS-X</span>
+              </div>
+
+              <!-- Main Game Logo Image Frame (3D Z-Layer 1) -->
+              <div class="depth-layer-1 relative aspect-square rounded-xl overflow-hidden bg-black border border-white/15 shadow-[0_25px_60px_rgba(0,0,0,0.95)]">
+                <img
+                  src="game_logo.jpg"
+                  alt="The Last Shift Official Logo"
+                  class="w-full h-full object-cover"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent"></div>
+              </div>
+
+              <!-- Floating Frosted Bottom Badge (3D Z-Layer 3) -->
+              <div class="depth-layer-3 mt-4 p-3.5 rounded-xl frosted-glass flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <img src="company_logo.jpg" alt="OmNexis-X" class="w-8 h-8 rounded object-cover border border-white/15" />
+                  <div>
+                    <span class="font-cinzel font-bold text-sm tracking-[0.2em] text-bone block">THE LAST SHIFT</span>
+                    <span class="text-[11px] text-ash">3D Psychological Horror</span>
+                  </div>
+                </div>
+                <span class="px-2.5 py-1 rounded bg-white/[0.05] border border-white/15 text-[10px] font-semibold tracking-widest text-ember uppercase">
+                  PC / 3D
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 3D Scroll-Animated Frosted Glass Metadata Bar -->
+      <div class="max-w-7xl mx-auto w-full mt-12 p-6 sm:p-8 rounded-2xl frosted-glass scroll-3d-specs grid grid-cols-2 sm:grid-cols-4 gap-6 text-left stage-3d">
+        <div class="depth-layer-1">
+          <span class="text-[10px] tracking-[0.25em] uppercase text-ash block">DEVELOPER</span>
+          <span class="font-orbitron font-bold text-xs sm:text-sm text-bone tracking-wider mt-1 block">OMNEXIS-X</span>
+        </div>
+        <div class="depth-layer-1">
+          <span class="text-[10px] tracking-[0.25em] uppercase text-ash block">GENRE</span>
+          <span class="font-medium text-xs sm:text-sm text-bone mt-1 block">3D Psychological Horror</span>
+        </div>
+        <div class="depth-layer-1">
+          <span class="text-[10px] tracking-[0.25em] uppercase text-ash block">EXPERIENCE</span>
+          <span class="font-medium text-xs sm:text-sm text-bone mt-1 block">Single-Player Story</span>
+        </div>
+        <div class="depth-layer-1">
+          <span class="text-[10px] tracking-[0.25em] uppercase text-ash block">NARRATIVE STATUS</span>
+          <span class="font-medium text-xs sm:text-sm text-ember mt-1 block">Classified Until Launch</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="horror-divider max-w-7xl mx-auto"></div>
+
+    <!-- ====================================================
+         SECTION 2: THE EXPERIENCE (3D SCROLL-ANIMATED PILLARS)
+         Zero spoilers, zero how-to-play instructions.
+    ===================================================== -->
+    <section id="the-last-shift" class="py-28 px-6 sm:px-10 stage-3d">
+      <div class="max-w-7xl mx-auto space-y-16">
+
+        <!-- Section Header -->
+        <div class="max-w-3xl space-y-4 scroll-3d-header">
+          <span class="text-xs font-semibold tracking-[0.3em] text-ember uppercase block">
+            01 // THE EXPERIENCE
+          </span>
+          <h2 class="font-cinzel font-bold text-3xl sm:text-5xl text-bone tracking-tight leading-tight">
+            FEAR WHAT LIES BEYOND THE HEADLIGHTS
+          </h2>
+          <p class="text-ash text-base sm:text-lg leading-relaxed">
+            In <span class="text-bone font-medium">The Last Shift</span>, the story is never spoiled before you step inside. Every road, corridor, and locked room is designed to be uncovered firsthand.
+          </p>
+        </div>
+
+        <!-- 3D Scroll-Animated Pillar Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 stage-3d">
+
+          <!-- Pillar 1 -->
+          <div class="card-3d interactive-tilt scroll-3d-card rounded-xl p-8 flex flex-col justify-between min-h-[290px]">
+            <div class="card-glare"></div>
+            <div class="depth-layer-2 flex items-center justify-between">
+              <span class="font-cinzel text-xs tracking-[0.3em] text-ember uppercase font-bold">PILLAR I</span>
+              <span class="w-8 h-[1px] bg-arterial"></span>
+            </div>
+            <div class="depth-layer-1 space-y-3 my-6">
+              <h3 class="font-cinzel font-bold text-2xl text-bone">Grounded Realism</h3>
+              <p class="text-sm text-ash leading-relaxed">
+                Crafted with dense night fog, warm amber streetlamps, and pitch-black interiors that make every step into the estate feel palpable.
+              </p>
+            </div>
+            <div class="depth-layer-2 text-[11px] tracking-[0.2em] uppercase text-lantern">
+              ATMOSPHERIC TENSION
+            </div>
+          </div>
+
+          <!-- Pillar 2 -->
+          <div class="card-3d interactive-tilt scroll-3d-card rounded-xl p-8 flex flex-col justify-between min-h-[290px]">
+            <div class="card-glare"></div>
+            <div class="depth-layer-2 flex items-center justify-between">
+              <span class="font-cinzel text-xs tracking-[0.3em] text-ember uppercase font-bold">PILLAR II</span>
+              <span class="w-8 h-[1px] bg-arterial"></span>
+            </div>
+            <div class="depth-layer-1 space-y-3 my-6">
+              <h3 class="font-cinzel font-bold text-2xl text-bone">A Secret Worth Keeping</h3>
+              <p class="text-sm text-ash leading-relaxed">
+                No plot summaries. No premature answers. The mystery of the shift only unfolds for those who cross the threshold themselves.
+              </p>
+            </div>
+            <div class="depth-layer-2 text-[11px] tracking-[0.2em] uppercase text-ember">
+              CLASSIFIED STORYLINE
+            </div>
+          </div>
+
+          <!-- Pillar 3 -->
+          <div class="card-3d interactive-tilt scroll-3d-card rounded-xl p-8 flex flex-col justify-between min-h-[290px]">
+            <div class="card-glare"></div>
+            <div class="depth-layer-2 flex items-center justify-between">
+              <span class="font-cinzel text-xs tracking-[0.3em] text-ember uppercase font-bold">PILLAR III</span>
+              <span class="w-8 h-[1px] bg-arterial"></span>
+            </div>
+            <div class="depth-layer-1 space-y-3 my-6">
+              <h3 class="font-cinzel font-bold text-2xl text-bone">Cinematic Immersion</h3>
+              <p class="text-sm text-ash leading-relaxed">
+                Seamless transitions between claustrophobic perspectives and unsettling 3D environments engineered to keep you on edge.
+              </p>
+            </div>
+            <div class="depth-layer-2 text-[11px] tracking-[0.2em] uppercase text-lantern">
+              PSYCHOLOGICAL DREAD
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <div class="horror-divider max-w-7xl mx-auto"></div>
+
+    <!-- ====================================================
+         SECTION 3: 3D PERSPECTIVE MEDIA SHOWCASE (SCREENSHOTS)
+    ===================================================== -->
+    <section id="screenshots" class="py-28 px-6 sm:px-10 stage-3d">
+      <div class="max-w-7xl mx-auto space-y-14">
+
+        <!-- Section Header -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 scroll-3d-header">
+          <div class="space-y-3">
+            <span class="text-xs font-semibold tracking-[0.3em] text-ember uppercase block">
+              02 // VISUAL ARCHIVE
+            </span>
+            <h2 class="font-cinzel font-bold text-3xl sm:text-5xl text-bone tracking-tight">
+              CAPTURED IN THE DARK
+            </h2>
+          </div>
+          <p class="text-ash text-sm max-w-md">
+            Move across any frame to inspect its 3D depth or click to view in full resolution.
+          </p>
+        </div>
+
+        <!-- 3D Scroll-Animated Screenshot Grid (screenshot1.jpg to screenshot4.jpg) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-9 stage-3d">
+
+          <!-- Screenshot 1 -->
+          <div
+            class="card-3d interactive-tilt scroll-3d-media rounded-xl p-4 cursor-pointer group"
+            onclick="openLightbox('screenshot1.jpg', 'I // INTO THE MIST')"
+          >
+            <div class="card-glare"></div>
+            <div class="depth-layer-1 relative aspect-video rounded-lg overflow-hidden bg-black border border-white/10">
+              <img
+                src="screenshot1.jpg"
+                alt="Into The Mist"
+                class="w-full h-full object-cover group-hover:scale-105 transition duration-700"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent"></div>
+            </div>
+            <div class="depth-layer-2 pt-4 px-2 pb-1 flex items-center justify-between">
+              <div>
+                <span class="text-[10px] tracking-[0.25em] text-lantern uppercase block">ARCHIVE 01</span>
+                <h3 class="font-cinzel font-bold text-lg text-bone">Into The Mist</h3>
+              </div>
+              <span class="px-3 py-1 rounded frosted-glass text-[10px] tracking-[0.2em] uppercase text-bone/80 group-hover:text-white group-hover:border-ember/50 transition">
+                INSPECT +
+              </span>
+            </div>
+          </div>
+
+          <!-- Screenshot 2 -->
+          <div
+            class="card-3d interactive-tilt scroll-3d-media rounded-xl p-4 cursor-pointer group"
+            onclick="openLightbox('screenshot2.jpg', 'II // THE FOREST ROAD')"
+          >
+            <div class="card-glare"></div>
+            <div class="depth-layer-1 relative aspect-video rounded-lg overflow-hidden bg-black border border-white/10">
+              <img
+                src="screenshot2.jpg"
+                alt="The Forest Road"
+                class="w-full h-full object-cover group-hover:scale-105 transition duration-700"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent"></div>
+            </div>
+            <div class="depth-layer-2 pt-4 px-2 pb-1 flex items-center justify-between">
+              <div>
+                <span class="text-[10px] tracking-[0.25em] text-lantern uppercase block">ARCHIVE 02</span>
+                <h3 class="font-cinzel font-bold text-lg text-bone">The Forest Road</h3>
+              </div>
+              <span class="px-3 py-1 rounded frosted-glass text-[10px] tracking-[0.2em] uppercase text-bone/80 group-hover:text-white group-hover:border-ember/50 transition">
+                INSPECT +
+              </span>
+            </div>
+          </div>
+
+          <!-- Screenshot 3 -->
+          <div
+            class="card-3d interactive-tilt scroll-3d-media rounded-xl p-4 cursor-pointer group"
+            onclick="openLightbox('screenshot3.jpg', 'III // THE VICTORIAN ESTATE')"
+          >
+            <div class="card-glare"></div>
+            <div class="depth-layer-1 relative aspect-video rounded-lg overflow-hidden bg-black border border-white/10">
+              <img
+                src="screenshot3.jpg"
+                alt="The Victorian Estate"
+                class="w-full h-full object-cover group-hover:scale-105 transition duration-700"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent"></div>
+            </div>
+            <div class="depth-layer-2 pt-4 px-2 pb-1 flex items-center justify-between">
+              <div>
+                <span class="text-[10px] tracking-[0.25em] text-ember uppercase block">ARCHIVE 03</span>
+                <h3 class="font-cinzel font-bold text-lg text-bone">The Victorian Estate</h3>
+              </div>
+              <span class="px-3 py-1 rounded frosted-glass text-[10px] tracking-[0.2em] uppercase text-bone/80 group-hover:text-white group-hover:border-ember/50 transition">
+                INSPECT +
+              </span>
+            </div>
+          </div>
+
+          <!-- Screenshot 4 -->
+          <div
+            class="card-3d interactive-tilt scroll-3d-media rounded-xl p-4 cursor-pointer group"
+            onclick="openLightbox('screenshot4.jpg', 'IV // THE THRESHOLD')"
+          >
+            <div class="card-glare"></div>
+            <div class="depth-layer-1 relative aspect-video rounded-lg overflow-hidden bg-black border border-white/10">
+              <img
+                src="screenshot4.jpg"
+                alt="The Threshold"
+                class="w-full h-full object-cover group-hover:scale-105 transition duration-700"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent"></div>
+            </div>
+            <div class="depth-layer-2 pt-4 px-2 pb-1 flex items-center justify-between">
+              <div>
+                <span class="text-[10px] tracking-[0.25em] text-ember uppercase block">ARCHIVE 04</span>
+                <h3 class="font-cinzel font-bold text-lg text-bone">The Threshold</h3>
+              </div>
+              <span class="px-3 py-1 rounded frosted-glass text-[10px] tracking-[0.2em] uppercase text-bone/80 group-hover:text-white group-hover:border-ember/50 transition">
+                INSPECT +
+              </span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <div class="horror-divider max-w-7xl mx-auto"></div>
+
+    <!-- ====================================================
+         SECTION 4: STUDIO IDENTITY (OMNEXIS-X)
+    ===================================================== -->
+    <section id="studio" class="py-28 px-6 sm:px-10 stage-3d">
+      <div class="max-w-7xl mx-auto">
+
+        <div class="card-3d interactive-tilt scroll-3d-Feature rounded-2xl p-8 sm:p-14">
+          <div class="card-glare"></div>
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+
+            <!-- Left: 3D Floating Studio Emblem (Actual company_logo.jpg) -->
+            <div class="lg:col-span-5 depth-layer-2">
+              <div class="aspect-[4/3] rounded-xl overflow-hidden bg-black border border-white/15 shadow-2xl p-2 frosted-glass">
+                <img
+                  src="company_logo.jpg"
+                  alt="OmNexis-X Studio Logo"
+                  class="w-full h-full object-cover rounded-lg"
+                />
+              </div>
+            </div>
+
+            <!-- Right: Studio Philosophy & Vision -->
+            <div class="lg:col-span-7 space-y-6 depth-layer-1">
+              <span class="text-xs font-semibold tracking-[0.3em] text-ash uppercase block">
+                03 // THE STUDIO
+              </span>
+              <div>
+                <h2 class="font-orbitron font-black text-3xl sm:text-5xl studio-chrome tracking-wider">
+                  OMNEXIS-X
+                </h2>
+                <p class="font-orbitron text-xs sm:text-sm tracking-[0.28em] text-lantern uppercase mt-2">
+                  BEYOND LIMITS. BEYOND TOMORROW.
+                </p>
+              </div>
+
+              <p class="text-ash text-sm sm:text-base leading-relaxed">
+                <strong class="text-bone font-medium">OmNexis-X</strong> is an independent game development studio focused on building atmospheric 3D worlds and boundary-pushing interactive experiences. Our debut flagship project, <span class="text-bone italic">The Last Shift</span>, embodies our commitment to visual immersion, suspense, and uncompromising creative vision.
+              </p>
+
+              <!-- Studio Pillars Frosted Mini-Row -->
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4">
+                <div class="p-3.5 rounded-lg frosted-glass">
+                  <span class="font-orbitron font-bold text-xs sm:text-sm text-bone block">3D WORLDS</span>
+                  <span class="text-xs text-ash">Atmospheric Design</span>
+                </div>
+                <div class="p-3.5 rounded-lg frosted-glass">
+                  <span class="font-orbitron font-bold text-xs sm:text-sm text-bone block">ORIGINAL IP</span>
+                  <span class="text-xs text-ash">Built From Scratch</span>
+                </div>
+                <div class="p-3.5 rounded-lg frosted-glass">
+                  <span class="font-orbitron font-bold text-xs sm:text-sm text-bone block">DARK FICTION</span>
+                  <span class="text-xs text-ash">Psychological Depth</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ====================================================
+         SECTION 5: SOCIAL & COMMUNITY PROMOTION HUB (@OMNEXIS_X)
+    ===================================================== -->
+    <section id="community" class="pb-28 pt-10 px-6 sm:px-10 stage-3d">
+      <div class="max-w-7xl mx-auto">
+
+        <div class="card-3d interactive-tilt scroll-3d-Feature rounded-2xl p-8 sm:p-14 border border-arterial/35">
+          <div class="card-glare"></div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            <!-- Left: Promotion Pitch -->
+            <div class="lg:col-span-7 space-y-5 depth-layer-1">
+              <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded frosted-glass">
+                <span class="w-2 h-2 rounded-full bg-ember animate-ping"></span>
+                <span class="text-[10px] font-semibold tracking-[0.25em] uppercase text-ember">
+                  OFFICIAL DISPATCH & DEVLOGS
+                </span>
+              </div>
+
+              <h2 class="font-cinzel font-bold text-3xl sm:text-5xl text-bone tracking-tight">
+                JOIN THE SHIFT ON INSTAGRAM
+              </h2>
+
+              <p class="text-ash text-sm sm:text-base leading-relaxed max-w-xl">
+                Follow <strong class="text-bone">@omnexis_x</strong> for exclusive behind-the-scenes development updates, visual reveals, teaser drops, and official studio announcements for <span class="text-bone italic">The Last Shift</span>.
+              </p>
+
+              <div class="pt-2">
+                <a
+                  href="https://www.instagram.com/omnexis_x"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn-horror rounded"
+                >
+                  <svg class="w-5 h-5 text-ember relative z-10" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                  </svg>
+                  <span class="relative z-10">FOLLOW @OMNEXIS_X</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- Right: 3D Floating Frosted Instagram Profile Badge Card -->
+            <div class="lg:col-span-5 depth-layer-3">
+              <a
+                href="https://www.instagram.com/omnexis_x"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="block rounded-xl frosted-glass p-6 hover:border-ember transition duration-300 shadow-2xl"
+              >
+                <div class="flex items-center gap-4">
+                  <div class="w-16 h-16 rounded-full p-[2px] bg-gradient-to-tr from-lantern via-ember to-arterial flex-shrink-0">
+                    <img
+                      src="company_logo.jpg"
+                      alt="@omnexis_x"
+                      class="w-full h-full object-cover rounded-full bg-black"
+                    />
+                  </div>
+                  <div>
+                    <div class="flex items-center gap-2">
+                      <span class="font-orbitron font-bold text-base text-bone">@omnexis_x</span>
+                      <span class="w-2 h-2 rounded-full bg-ember"></span>
+                    </div>
+                    <span class="text-xs text-ash block mt-0.5">OmNexis-X Official Studio</span>
+                    <span class="text-[11px] text-lantern tracking-wider uppercase mt-1 block">instagram.com/omnexis_x ↗</span>
+                  </div>
+                </div>
+
+                <div class="mt-6 pt-5 border-t border-white/10 grid grid-cols-3 gap-2 text-center">
+                  <div class="p-2.5 rounded bg-white/[0.04] border border-white/[0.06]">
+                    <span class="text-[10px] tracking-widest uppercase text-ash block">TEASERS</span>
+                    <span class="font-cinzel font-bold text-xs text-bone mt-0.5 block">EXCLUSIVE</span>
+                  </div>
+                  <div class="p-2.5 rounded bg-white/[0.04] border border-white/[0.06]">
+                    <span class="text-[10px] tracking-widest uppercase text-ash block">DEVLOGS</span>
+                    <span class="font-cinzel font-bold text-xs text-bone mt-0.5 block">BEHIND SCENES</span>
+                  </div>
+                  <div class="p-2.5 rounded bg-white/[0.04] border border-white/[0.06]">
+                    <span class="text-[10px] tracking-widest uppercase text-ash block">UPDATES</span>
+                    <span class="font-cinzel font-bold text-xs text-ember mt-0.5 block">OFFICIAL</span>
+                  </div>
+                </div>
+              </a>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ====================================================
+       FOOTER (FROSTED GLASS)
+  ===================================================== -->
+  <footer class="border-t border-white/[0.08] bg-pitch/80 backdrop-blur-xl py-12 px-6 sm:px-10">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-3.5">
+        <img
+          src="company_logo.jpg"
+          alt="OmNexis-X"
+          class="w-9 h-9 rounded object-cover border border-white/15"
+        />
+        <div>
+          <span class="font-orbitron font-bold text-xs tracking-[0.2em] text-bone block">OMNEXIS-X</span>
+          <span class="text-[10px] tracking-[0.18em] text-ash uppercase block">BEYOND LIMITS. BEYOND TOMORROW.</span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-6 text-xs tracking-widest uppercase text-ash">
+        <a
+          href="https://www.instagram.com/omnexis_x"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="hover:text-bone transition"
+        >
+          Instagram (@omnexis_x)
+        </a>
+        <span>•</span>
+        <span>© 2026 OmNexis-X</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- FULLSCREEN SCREENSHOT LIGHTBOX -->
+  <div
+    id="lightbox-modal"
+    class="fixed inset-0 z-50 hidden bg-black/90 backdrop-blur-2xl flex items-center justify-center p-4 sm:p-10"
+    onclick="closeLightbox()"
+  >
+    <div class="max-w-6xl w-full space-y-4" onclick="event.stopPropagation()">
+      <div class="flex items-center justify-between">
+        <h3 id="lightbox-title" class="font-cinzel font-bold text-base sm:text-lg text-bone tracking-widest uppercase"></h3>
+        <button
+          onclick="closeLightbox()"
+          class="btn-horror !py-2 !px-5 !text-xs rounded"
+        >
+          <span class="relative z-10">Close [ESC]</span>
+        </button>
+      </div>
+      <div class="aspect-video w-full rounded-xl overflow-hidden frosted-glass p-2 shadow-2xl">
+        <img id="lightbox-img" src="" alt="Fullscreen Preview" class="w-full h-full object-contain rounded-lg" />
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================
+       SCRIPTS: 3D ELEMENT ANIMATIONS & SCROLL TRIGGERS
+  ===================================================== -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      gsap.registerPlugin(ScrollTrigger);
+
+      // 1. Hero 3D Entrance Unfold
+      gsap.fromTo('.hero-3d-text',
+        { opacity: 0, y: 55, z: -120, rotateX: 18, rotateY: 8 },
+        { opacity: 1, y: 0, z: 0, rotateX: 0, rotateY: 0, duration: 1.25, ease: 'power3.out' }
+      );
+
+      gsap.fromTo('.hero-3d-poster',
+        { opacity: 0, y: 70, z: -180, rotateY: -26, rotateX: 14, scale: 0.9 },
+        { opacity: 1, y: 0, z: 0, rotateY: 0, rotateX: 0, scale: 1, duration: 1.4, ease: 'power3.out', delay: 0.15 }
+      );
+
+      // 2. Hero 3D Scroll Parallax (Scrubs in 3D space as user scrolls down)
+      gsap.to('.hero-3d-poster', {
+        rotateY: 16,
+        rotateX: -12,
+        y: -45,
+        z: 60,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '#hero',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 1.2
+        }
+      });
+
+      gsap.to('.hero-3d-text', {
+        y: -35,
+        rotateX: 10,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '#hero',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 1.2
+        }
+      });
+
+      // 3. Frosted Metadata Bar 3D Flip-In
+      gsap.fromTo('.scroll-3d-specs',
+        { opacity: 0, y: 50, rotateX: -35, z: -100, transformOrigin: '50% 0%' },
+        {
+          opacity: 1,
+          y: 0,
+          rotateX: 0,
+          z: 0,
+          duration: 1.1,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '.scroll-3d-specs',
+            start: 'top 92%',
+            toggleActions: 'play none none reverse'
+          }
+        }
+      );
+
+      // 4. Section Headers 3D Perspective Unfold on Scroll
+      gsap.utils.toArray('.scroll-3d-header').forEach((header) => {
+        gsap.fromTo(header,
+          { opacity: 0, y: 60, z: -90, rotateX: 25, transformOrigin: '50% 100%' },
+          {
+            opacity: 1,
+            y: 0,
+            z: 0,
+            rotateX: 0,
+            duration: 1.05,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: header,
+              start: 'top 85%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      });
+
+      // 5. 3D Pillar Cards Scroll Animation (Deep 3D Perspective Flip-Up)
+      gsap.fromTo('.scroll-3d-card',
+        {
+          opacity: 0,
+          y: 100,
+          z: -160,
+          rotateX: 32,
+          rotateY: -16,
+          scale: 0.88,
+          transformOrigin: '50% 100%'
+        },
+        {
+          opacity: 1,
+          y: 0,
+          z: 0,
+          rotateX: 0,
+          rotateY: 0,
+          scale: 1,
+          duration: 1.15,
+          stagger: 0.16,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '#the-last-shift',
+            start: 'top 72%',
+            toggleActions: 'play none none reverse'
+          }
+        }
+      );
+
+      // 6. 3D Media Screenshot Cards Scroll Animation
+      gsap.utils.toArray('.scroll-3d-media').forEach((card, i) => {
+        const startRotY = i % 2 === 0 ? 22 : -22;
+        gsap.fromTo(card,
+          {
+            opacity: 0,
+            y: 110,
+            z: -150,
+            rotateX: 26,
+            rotateY: startRotY,
+            scale: 0.9
+          },
+          {
+            opacity: 1,
+            y: 0,
+            z: 0,
+            rotateX: 0,
+            rotateY: 0,
+            scale: 1,
+            duration: 1.15,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: card,
+              start: 'top 86%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      });
+
+      // 7. Large Feature Cards (Studio & Community) 3D Scroll Reveal
+      gsap.utils.toArray('.scroll-3d-Feature').forEach((block) => {
+        gsap.fromTo(block,
+          {
+            opacity: 0,
+            y: 100,
+            z: -140,
+            rotateX: 24,
+            scale: 0.92
+          },
+          {
+            opacity: 1,
+            y: 0,
+            z: 0,
+            rotateX: 0,
+            scale: 1,
+            duration: 1.2,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: block,
+              start: 'top 82%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      });
+
+      // 8. Multi-Layer 3D Mouse Tilt + Internal Z-Layer Parallax on Every .interactive-tilt Card
+      document.querySelectorAll('.interactive-tilt').forEach((card) => {
+        const layer1 = card.querySelectorAll('.depth-layer-1');
+        const layer2 = card.querySelectorAll('.depth-layer-2');
+        const layer3 = card.querySelectorAll('.depth-layer-3');
+
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+
+          card.style.setProperty('--mouse-x', `${x}px`);
+          card.style.setProperty('--mouse-y', `${y}px`);
+
+          const normX = (x / rect.width) - 0.5;
+          const normY = (y / rect.height) - 0.5;
+
+          const rotateY = normX * 18;
+          const rotateX = normY * -18;
+
+          gsap.to(card, {
+            rotateX: rotateX,
+            rotateY: rotateY,
+            z: 18,
+            duration: 0.35,
+            ease: 'power2.out',
+            transformPerspective: 1600
+          });
+
+          if (layer1.length) {
+            gsap.to(layer1, { x: normX * 10, y: normY * 10, duration: 0.35, ease: 'power2.out' });
+          }
+          if (layer2.length) {
+            gsap.to(layer2, { x: normX * 20, y: normY * 20, duration: 0.35, ease: 'power2.out' });
+          }
+          if (layer3.length) {
+            gsap.to(layer3, { x: normX * 30, y: normY * 30, duration: 0.35, ease: 'power2.out' });
+          }
+        });
+
+        card.addEventListener('mouseleave', () => {
+          gsap.to(card, {
+            rotateX: 0,
+            rotateY: 0,
+            z: 0,
+            duration: 0.75,
+            ease: 'power3.out'
+          });
+          gsap.to([layer1, layer2, layer3], {
+            x: 0,
+            y: 0,
+            duration: 0.75,
+            ease: 'power3.out'
+          });
+        });
+      });
+
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeLightbox();
+      });
+    });
+
+    function openLightbox(src, title) {
+      document.getElementById('lightbox-img').src = src;
+      document.getElementById('lightbox-title').textContent = title;
+      document.getElementById('lightbox-modal').classList.remove('hidden');
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox-modal').classList.add('hidden');
+    }
+  </script>
+</body>
+</html>
