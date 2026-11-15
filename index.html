@@ -363,6 +363,15 @@
     ::-webkit-scrollbar-thumb {
       background: #8F1419;
     }
+
+    /* Hide Scrollbar for Mobile Touch Carousels */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
   </style>
 </head>
 <body class="antialiased selection:bg-arterial selection:text-white">
@@ -378,6 +387,11 @@
   </svg>
 
   <div class="horror-grain"></div>
+
+  <!-- ====================================================
+       DESKTOP UI WRAPPER (100% UNCHANGED DESKTOP VIEW)
+  ===================================================== -->
+  <div id="desktop-ui" class="hidden lg:block">
 
   <!-- ====================================================
        NAVIGATION BAR (FROSTED GLASS STUDIO HEADER)
@@ -968,6 +982,411 @@
     </div>
   </footer>
 
+  </div>
+  <!-- END DESKTOP UI WRAPPER -->
+
+  <!-- ====================================================
+       DEDICATED MOBILE UI (COMPLETELY NEW UI FOR PHONES)
+  ===================================================== -->
+  <div id="mobile-ui" class="block lg:hidden pb-24">
+
+    <!-- Mobile Top App Header -->
+    <header class="fixed top-0 inset-x-0 z-50 h-16 px-4 bg-pitch/75 backdrop-blur-2xl border-b border-white/[0.08] flex items-center justify-between shadow-[0_8px_25px_rgba(0,0,0,0.75)]">
+      <a href="#m-hero" class="flex items-center gap-2.5">
+        <div class="w-9 h-9 rounded-lg bg-black border border-white/15 overflow-hidden flex-shrink-0">
+          <img src="company_logo.jpg" alt="OmNexis-X" class="w-full h-full object-cover" />
+        </div>
+        <div>
+          <span class="font-orbitron font-bold text-xs tracking-[0.2em] text-white block leading-none">OMNEXIS-X</span>
+          <span class="text-[8px] tracking-[0.22em] text-ember uppercase block mt-1">THE LAST SHIFT</span>
+        </div>
+      </a>
+
+      <div class="flex items-center gap-2">
+        <a
+          href="https://www.instagram.com/omnexis_x"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="OmNexis-X Instagram"
+          class="w-9 h-9 rounded-lg frosted-glass flex items-center justify-center border border-white/15"
+        >
+          <svg class="w-4 h-4 text-ember"><use href="#icon-instagram"></use></svg>
+        </a>
+        <button
+          type="button"
+          onclick="openDownloadModal()"
+          class="btn-horror !py-2 !px-3.5 !text-[10px] !tracking-[0.16em] rounded-lg cursor-pointer"
+        >
+          <svg class="w-3.5 h-3.5 text-ember relative z-10"><use href="#icon-download"></use></svg>
+          <span class="relative z-10">Download</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Mobile Floating Bottom Navigation Dock -->
+    <nav class="fixed bottom-3 inset-x-3 z-50 h-14 rounded-2xl frosted-glass px-2 flex items-center justify-around border border-white/15 shadow-[0_15px_35px_rgba(0,0,0,0.95)]">
+      <a href="#m-hero" class="flex flex-col items-center justify-center py-1 px-2 text-bone active:text-ember transition">
+        <span class="text-[9px] font-orbitron tracking-[0.15em] uppercase">Shift</span>
+        <span class="w-1 h-1 rounded-full bg-ember mt-1"></span>
+      </a>
+      <a href="#m-experience" class="flex flex-col items-center justify-center py-1 px-2 text-ash hover:text-bone transition">
+        <span class="text-[9px] font-orbitron tracking-[0.15em] uppercase">Pillars</span>
+      </a>
+      <button
+        type="button"
+        onclick="openDownloadModal()"
+        class=" -mt-5 w-12 h-12 rounded-xl bg-gradient-to-b from-ember to-arterial border border-white/25 shadow-[0_8px_20px_rgba(185,28,34,0.6)] flex items-center justify-center text-white"
+        aria-label="Download Game"
+      >
+        <svg class="w-5 h-5"><use href="#icon-download"></use></svg>
+      </button>
+      <a href="#m-media" class="flex flex-col items-center justify-center py-1 px-2 text-ash hover:text-bone transition">
+        <span class="text-[9px] font-orbitron tracking-[0.15em] uppercase">Media</span>
+      </a>
+      <a href="#m-studio" class="flex flex-col items-center justify-center py-1 px-2 text-ash hover:text-bone transition">
+        <span class="text-[9px] font-orbitron tracking-[0.15em] uppercase">Studio</span>
+      </a>
+    </nav>
+
+    <!-- Mobile Section 1: Portrait Hero Showcase -->
+    <section id="m-hero" class="pt-20 pb-10 px-4 space-y-6 stage-3d">
+      <!-- Top Studio Status Pill -->
+      <div class="flex justify-center m-hero-anim">
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full frosted-glass">
+          <span class="w-1.5 h-1.5 rounded-full bg-ember animate-pulse"></span>
+          <span class="text-[9px] font-semibold tracking-[0.22em] uppercase text-bone/90">
+            OMNEXIS-X • FLAGSHIP 3D HORROR
+          </span>
+        </div>
+      </div>
+
+      <!-- Mobile Centerpiece 3D Key Art Showcase (Positioned First for Vertical Screens) -->
+      <div class="relative max-w-[290px] mx-auto stage-3d m-hero-anim">
+        <div class="card-3d mobile-touch-tilt rounded-2xl p-3">
+          <div class="card-glare"></div>
+          <div class="flex items-center justify-between text-[9px] tracking-[0.2em] uppercase text-ash mb-2 px-1">
+            <span>KEY ART</span>
+            <span class="text-ember font-semibold">PC / 3D</span>
+          </div>
+          <div class="relative aspect-square rounded-xl overflow-hidden bg-black border border-white/15 shadow-2xl">
+            <img src="game_logo.jpg" alt="The Last Shift Key Art" class="w-full h-full object-cover" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent"></div>
+            <div class="absolute bottom-2.5 inset-x-2.5 p-2.5 rounded-lg frosted-glass flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <img src="company_logo.jpg" alt="OmNexis-X" class="w-6 h-6 rounded object-cover border border-white/20" />
+                <div>
+                  <span class="font-cinzel font-bold text-[11px] tracking-[0.16em] text-white block leading-none">THE LAST SHIFT</span>
+                  <span class="text-[9px] text-ash block mt-0.5">Psychological Horror</span>
+                </div>
+              </div>
+              <span class="w-2 h-2 rounded-full bg-ember"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile Hero Typography & Thumb Actions -->
+      <div class="text-center space-y-3 px-1 m-hero-anim">
+        <p class="font-cinzel text-[10px] tracking-[0.32em] text-lantern uppercase font-semibold">
+          An OmNexis-X Original Experience
+        </p>
+        <h1 class="font-cinzel font-black text-4xl sm:text-5xl tracking-tight leading-none horror-title">
+          THE LAST SHIFT
+        </h1>
+        <p class="text-ash text-xs sm:text-sm leading-relaxed max-w-sm mx-auto">
+          When the final hour arrives, silence becomes your only witness. Enter a grounded 3D psychological horror world where the truth stays buried until you step inside.
+        </p>
+
+        <!-- Thumb-Friendly Side-by-Side Action Bar -->
+        <div class="grid grid-cols-2 gap-2.5 pt-2 max-w-sm mx-auto">
+          <button
+            type="button"
+            onclick="openDownloadModal()"
+            class="btn-horror !py-3 !px-3 !text-[10px] !tracking-[0.16em] rounded-xl w-full cursor-pointer"
+          >
+            <svg class="w-3.5 h-3.5 text-ember relative z-10"><use href="#icon-download"></use></svg>
+            <span class="relative z-10">Download</span>
+          </button>
+          <a
+            href="#m-media"
+            class="btn-horror-ghost !py-3 !px-3 !text-[10px] !tracking-[0.16em] rounded-xl w-full"
+          >
+            <span>View Media</span>
+            <span class="text-ember">↓</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Compact 2x2 Mobile Spec Grid -->
+      <div class="grid grid-cols-2 gap-2.5 pt-1 m-hero-anim">
+        <div class="p-3 rounded-xl frosted-glass">
+          <span class="text-[8px] tracking-[0.22em] uppercase text-ash block">DEVELOPER</span>
+          <span class="font-orbitron font-bold text-xs text-bone mt-0.5 block">OMNEXIS-X</span>
+        </div>
+        <div class="p-3 rounded-xl frosted-glass">
+          <span class="text-[8px] tracking-[0.22em] uppercase text-ash block">GENRE</span>
+          <span class="font-medium text-xs text-bone mt-0.5 block">3D Horror</span>
+        </div>
+        <div class="p-3 rounded-xl frosted-glass">
+          <span class="text-[8px] tracking-[0.22em] uppercase text-ash block">EXPERIENCE</span>
+          <span class="font-medium text-xs text-bone mt-0.5 block">Single-Player</span>
+        </div>
+        <div class="p-3 rounded-xl frosted-glass">
+          <span class="text-[8px] tracking-[0.22em] uppercase text-ash block">STORY STATUS</span>
+          <span class="font-medium text-xs text-ember mt-0.5 block">Classified</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="horror-divider mx-4"></div>
+
+    <!-- Mobile Section 2: Horizontal Touch-Snap Experience Carousel -->
+    <section id="m-experience" class="py-10 space-y-5 stage-3d">
+      <div class="px-4 flex items-end justify-between m-scroll-reveal">
+        <div>
+          <span class="text-[10px] font-semibold tracking-[0.26em] text-ember uppercase block">01 // THE EXPERIENCE</span>
+          <h2 class="font-cinzel font-bold text-2xl text-bone tracking-tight mt-1">CORE HORROR PILLARS</h2>
+        </div>
+        <span class="text-[10px] tracking-[0.18em] uppercase text-lantern">SWIPE →</span>
+      </div>
+
+      <!-- Touch-Snap Horizontal 3D Card Track -->
+      <div class="flex gap-3.5 overflow-x-auto no-scrollbar snap-x snap-mandatory px-4 pb-2 m-scroll-reveal">
+        <!-- Mobile Pillar 1 -->
+        <div class="card-3d mobile-touch-tilt snap-center shrink-0 w-[80vw] max-w-[300px] rounded-2xl p-5 flex flex-col justify-between min-h-[210px]">
+          <div class="flex items-center justify-between">
+            <span class="font-cinzel text-[10px] tracking-[0.25em] text-ember font-bold uppercase">PILLAR I</span>
+            <span class="w-6 h-[1px] bg-arterial"></span>
+          </div>
+          <div class="space-y-2 my-3">
+            <h3 class="font-cinzel font-bold text-lg text-bone">Grounded Realism</h3>
+            <p class="text-xs text-ash leading-relaxed">
+              Dense night fog, warm amber streetlamps, and pitch-black interiors make every step toward the estate feel palpable.
+            </p>
+          </div>
+          <span class="text-[9px] tracking-[0.2em] uppercase text-lantern">ATMOSPHERIC TENSION</span>
+        </div>
+
+        <!-- Mobile Pillar 2 -->
+        <div class="card-3d mobile-touch-tilt snap-center shrink-0 w-[80vw] max-w-[300px] rounded-2xl p-5 flex flex-col justify-between min-h-[210px]">
+          <div class="flex items-center justify-between">
+            <span class="font-cinzel text-[10px] tracking-[0.25em] text-ember font-bold uppercase">PILLAR II</span>
+            <span class="w-6 h-[1px] bg-arterial"></span>
+          </div>
+          <div class="space-y-2 my-3">
+            <h3 class="font-cinzel font-bold text-lg text-bone">A Secret Worth Keeping</h3>
+            <p class="text-xs text-ash leading-relaxed">
+              No plot spoilers or premature answers. The mystery of the shift unfolds only when you cross the threshold yourself.
+            </p>
+          </div>
+          <span class="text-[9px] tracking-[0.2em] uppercase text-ember">CLASSIFIED STORYLINE</span>
+        </div>
+
+        <!-- Mobile Pillar 3 -->
+        <div class="card-3d mobile-touch-tilt snap-center shrink-0 w-[80vw] max-w-[300px] rounded-2xl p-5 flex flex-col justify-between min-h-[210px]">
+          <div class="flex items-center justify-between">
+            <span class="font-cinzel text-[10px] tracking-[0.25em] text-ember font-bold uppercase">PILLAR III</span>
+            <span class="w-6 h-[1px] bg-arterial"></span>
+          </div>
+          <div class="space-y-2 my-3">
+            <h3 class="font-cinzel font-bold text-lg text-bone">Cinematic Immersion</h3>
+            <p class="text-xs text-ash leading-relaxed">
+              Seamless transitions between claustrophobic perspectives and unsettling 3D environments built to keep you on edge.
+            </p>
+          </div>
+          <span class="text-[9px] tracking-[0.2em] uppercase text-lantern">PSYCHOLOGICAL DREAD</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="horror-divider mx-4"></div>
+
+    <!-- Mobile Section 3: Compact 2-Column & Featured Visual Archive -->
+    <section id="m-media" class="py-10 px-4 space-y-5 stage-3d">
+      <div class="flex items-end justify-between m-scroll-reveal">
+        <div>
+          <span class="text-[10px] font-semibold tracking-[0.26em] text-ember uppercase block">02 // VISUAL ARCHIVE</span>
+          <h2 class="font-cinzel font-bold text-2xl text-bone tracking-tight mt-1">CAPTURED IN THE DARK</h2>
+        </div>
+        <span class="text-[9px] tracking-[0.18em] uppercase text-ash">TAP TO EXPAND</span>
+      </div>
+
+      <!-- Featured Hero Capture + 2-Column Mobile Thumbnail Grid -->
+      <div class="space-y-3 m-scroll-reveal">
+        <!-- Featured Capture 01 -->
+        <div
+          class="card-3d mobile-touch-tilt rounded-2xl p-2.5 cursor-pointer"
+          onclick="openLightbox('screenshot1.jpg', 'I // INTO THE MIST')"
+        >
+          <div class="relative aspect-video rounded-xl overflow-hidden bg-black border border-white/10">
+            <img src="screenshot1.jpg" alt="Into The Mist" loading="lazy" class="w-full h-full object-cover" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+            <div class="absolute bottom-2.5 inset-x-3 flex items-end justify-between">
+              <div>
+                <span class="text-[8px] tracking-[0.22em] text-lantern uppercase block">ARCHIVE 01</span>
+                <h3 class="font-cinzel font-bold text-sm text-bone">Into The Mist</h3>
+              </div>
+              <span class="px-2 py-0.5 rounded frosted-glass text-[8px] tracking-[0.18em] uppercase text-bone">FULLSCREEN +</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2-Column Mobile Captures (02 & 03) -->
+        <div class="grid grid-cols-2 gap-3">
+          <div
+            class="card-3d mobile-touch-tilt rounded-xl p-2 cursor-pointer"
+            onclick="openLightbox('screenshot2.jpg', 'II // THE FOREST ROAD')"
+          >
+            <div class="relative aspect-[4/3] rounded-lg overflow-hidden bg-black border border-white/10">
+              <img src="screenshot2.jpg" alt="The Forest Road" loading="lazy" class="w-full h-full object-cover" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent"></div>
+            </div>
+            <div class="pt-2 px-1">
+              <span class="text-[8px] tracking-[0.2em] text-lantern uppercase block">ARCHIVE 02</span>
+              <h3 class="font-cinzel font-bold text-xs text-bone truncate">The Forest Road</h3>
+            </div>
+          </div>
+
+          <div
+            class="card-3d mobile-touch-tilt rounded-xl p-2 cursor-pointer"
+            onclick="openLightbox('screenshot3.jpg', 'III // THE VICTORIAN ESTATE')"
+          >
+            <div class="relative aspect-[4/3] rounded-lg overflow-hidden bg-black border border-white/10">
+              <img src="screenshot3.jpg" alt="The Victorian Estate" loading="lazy" class="w-full h-full object-cover" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent"></div>
+            </div>
+            <div class="pt-2 px-1">
+              <span class="text-[8px] tracking-[0.2em] text-ember uppercase block">ARCHIVE 03</span>
+              <h3 class="font-cinzel font-bold text-xs text-bone truncate">Victorian Estate</h3>
+            </div>
+          </div>
+        </div>
+
+        <!-- Wide Capture 04 -->
+        <div
+          class="card-3d mobile-touch-tilt rounded-2xl p-2.5 cursor-pointer"
+          onclick="openLightbox('screenshot4.jpg', 'IV // THE THRESHOLD')"
+        >
+          <div class="relative aspect-video rounded-xl overflow-hidden bg-black border border-white/10">
+            <img src="screenshot4.jpg" alt="The Threshold" loading="lazy" class="w-full h-full object-cover" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+            <div class="absolute bottom-2.5 inset-x-3 flex items-end justify-between">
+              <div>
+                <span class="text-[8px] tracking-[0.22em] text-ember uppercase block">ARCHIVE 04</span>
+                <h3 class="font-cinzel font-bold text-sm text-bone">The Threshold</h3>
+              </div>
+              <span class="px-2 py-0.5 rounded frosted-glass text-[8px] tracking-[0.18em] uppercase text-bone">FULLSCREEN +</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="horror-divider mx-4"></div>
+
+    <!-- Mobile Section 4: Compact Studio Identity Card -->
+    <section id="m-studio" class="py-10 px-4 space-y-5 stage-3d">
+      <div class="card-3d mobile-touch-tilt m-scroll-reveal rounded-2xl p-5 space-y-4">
+        <div class="flex items-center gap-3.5">
+          <div class="w-16 h-16 rounded-xl overflow-hidden bg-black border border-white/15 shrink-0 p-1 frosted-glass">
+            <img src="company_logo.jpg" alt="OmNexis-X" loading="lazy" class="w-full h-full object-cover rounded-lg" />
+          </div>
+          <div>
+            <span class="text-[9px] font-semibold tracking-[0.25em] text-ash uppercase block">03 // THE STUDIO</span>
+            <h2 class="font-orbitron font-black text-xl studio-chrome tracking-wider mt-0.5">OMNEXIS-X</h2>
+            <p class="font-orbitron text-[9px] tracking-[0.2em] text-lantern uppercase mt-0.5">
+              BEYOND LIMITS. BEYOND TOMORROW.
+            </p>
+          </div>
+        </div>
+
+        <p class="text-ash text-xs leading-relaxed">
+          <strong class="text-bone font-medium">OmNexis-X</strong> is an independent game studio crafting atmospheric 3D worlds and dark interactive fiction. Our flagship project, <span class="text-bone italic">The Last Shift</span>, is engineered from the ground up for suspense and visual immersion.
+        </p>
+
+        <div class="grid grid-cols-3 gap-2 pt-1 text-center">
+          <div class="p-2.5 rounded-lg frosted-glass">
+            <span class="font-orbitron font-bold text-[10px] text-bone block">3D WORLDS</span>
+            <span class="text-[9px] text-ash block mt-0.5">Atmospheric</span>
+          </div>
+          <div class="p-2.5 rounded-lg frosted-glass">
+            <span class="font-orbitron font-bold text-[10px] text-bone block">ORIGINAL IP</span>
+            <span class="text-[9px] text-ash block mt-0.5">In-House</span>
+          </div>
+          <div class="p-2.5 rounded-lg frosted-glass">
+            <span class="font-orbitron font-bold text-[10px] text-bone block">HORROR</span>
+            <span class="text-[9px] text-ash block mt-0.5">Psychological</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mobile Section 5: Mobile Social & Community Dispatch -->
+    <section id="m-community" class="pb-8 px-4 space-y-4 stage-3d">
+      <div class="card-3d mobile-touch-tilt m-scroll-reveal rounded-2xl p-5 border border-arterial/40 space-y-4">
+        <div class="flex items-center justify-between">
+          <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded frosted-glass">
+            <span class="w-1.5 h-1.5 rounded-full bg-ember animate-ping"></span>
+            <span class="text-[9px] font-semibold tracking-[0.2em] uppercase text-ember">OFFICIAL DISPATCH</span>
+          </div>
+          <span class="text-[10px] font-orbitron text-ash">@omnexis_x</span>
+        </div>
+
+        <!-- Instagram App-Style Profile Header -->
+        <a
+          href="https://www.instagram.com/omnexis_x"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-center gap-3.5 p-3 rounded-xl frosted-glass border border-white/10"
+        >
+          <div class="w-12 h-12 rounded-full p-[2px] bg-gradient-to-tr from-lantern via-ember to-arterial shrink-0">
+            <img src="company_logo.jpg" alt="@omnexis_x" loading="lazy" class="w-full h-full object-cover rounded-full bg-black" />
+          </div>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center gap-1.5">
+              <span class="font-orbitron font-bold text-sm text-bone truncate">@omnexis_x</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-ember shrink-0"></span>
+            </div>
+            <span class="text-[11px] text-ash block">OmNexis-X Official Studio</span>
+            <span class="text-[10px] text-lantern tracking-wider uppercase block mt-0.5">Tap to Open Instagram ↗</span>
+          </div>
+        </a>
+
+        <p class="text-ash text-xs leading-relaxed">
+          Follow <strong class="text-bone">@omnexis_x</strong> for exclusive behind-the-scenes devlogs, teaser drops, and launch dispatches for <span class="text-bone italic">The Last Shift</span>.
+        </p>
+
+        <div class="grid grid-cols-1 gap-2.5 pt-1">
+          <a
+            href="https://www.instagram.com/omnexis_x"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-horror !py-3 !text-[10px] rounded-xl w-full"
+          >
+            <svg class="w-4 h-4 text-ember relative z-10"><use href="#icon-instagram"></use></svg>
+            <span class="relative z-10">FOLLOW @OMNEXIS_X</span>
+          </a>
+          <button
+            type="button"
+            onclick="openDownloadModal()"
+            class="btn-horror-ghost !py-3 !text-[10px] rounded-xl w-full cursor-pointer"
+          >
+            <svg class="w-3.5 h-3.5 text-ember"><use href="#icon-download"></use></svg>
+            <span>Download Build</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Compact Mobile Footer -->
+      <div class="pt-4 text-center space-y-1">
+        <span class="font-orbitron font-bold text-[10px] tracking-[0.22em] text-bone/80 block">OMNEXIS-X</span>
+        <span class="text-[9px] tracking-[0.16em] text-ash uppercase block">© 2026 OMNEXIS-X • BEYOND LIMITS. BEYOND TOMORROW.</span>
+      </div>
+    </section>
+
+  </div>
+  <!-- END DEDICATED MOBILE UI -->
+
   <!-- FULLSCREEN SCREENSHOT LIGHTBOX -->
   <div
     id="lightbox-modal"
@@ -1013,16 +1432,16 @@
     <button
       type="button"
       onclick="closeDownloadModal()"
-      class="absolute top-6 right-6 sm:top-8 sm:right-10 z-30 btn-horror-ghost !py-2 !px-4 !text-xs rounded cursor-pointer"
+      class="absolute top-4 right-4 sm:top-8 sm:right-10 z-30 btn-horror-ghost !py-2 !px-3.5 sm:!px-4 !text-[10px] sm:!text-xs rounded cursor-pointer"
     >
       <span>Close [ESC]</span>
     </button>
 
     <!-- Center 3D Sequence Stage -->
-    <div id="dl-stage-card" class="relative z-20 max-w-4xl w-full text-center space-y-7 stage-3d">
+    <div id="dl-stage-card" class="relative z-20 max-w-5xl w-full text-center space-y-4 sm:space-y-7 px-2 stage-3d">
 
       <!-- Floating 3D Dual Emblem (Studio + Game) -->
-      <div id="dl-emblem" class="mx-auto w-28 h-28 sm:w-36 sm:h-36 rounded-2xl p-1.5 frosted-glass relative opacity-0 ambient-float-3d">
+      <div id="dl-emblem" class="mx-auto w-24 h-24 sm:w-36 sm:h-36 rounded-2xl p-1.5 frosted-glass relative opacity-0 ambient-float-3d">
         <img
           src="game_logo.jpg"
           alt="The Last Shift"
@@ -1031,41 +1450,41 @@
         <img
           src="company_logo.jpg"
           alt="OmNexis-X"
-          class="w-10 h-10 rounded-lg object-cover border border-white/30 absolute -bottom-3 -right-3 shadow-xl bg-black"
+          class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg object-cover border border-white/30 absolute -bottom-2.5 -right-2.5 sm:-bottom-3 sm:-right-3 shadow-xl bg-black"
         />
       </div>
 
       <!-- Dramatic 3D "COMING SOON" Reveal -->
-      <div id="dl-reveal-box" class="space-y-5">
-        <div id="dl-badge" class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded frosted-glass opacity-0">
+      <div id="dl-reveal-box" class="space-y-3.5 sm:space-y-5">
+        <div id="dl-badge" class="inline-flex items-center gap-2 sm:gap-2.5 px-3 sm:px-4 py-1 sm:py-1.5 rounded frosted-glass opacity-0">
           <span class="w-2 h-2 rounded-full bg-ember animate-ping"></span>
-          <span class="text-[10px] sm:text-xs font-orbitron tracking-[0.28em] uppercase text-ember">
+          <span class="text-[9px] sm:text-xs font-orbitron tracking-[0.22em] sm:tracking-[0.28em] uppercase text-ember">
             OMNEXIS-X • THE LAST SHIFT
           </span>
         </div>
 
-        <!-- Hardcoded 3D Character Spans for Guaranteed Rendering -->
+        <!-- Single-Line Guaranteed 3D Character Spans -->
         <h2
           id="dl-coming-soon-title"
           aria-label="COMING SOON"
-          class="font-cinzel font-black text-4xl sm:text-7xl md:text-8xl tracking-[0.14em] sm:tracking-[0.2em] leading-none pulse-horror-glow select-none py-2 stage-3d"
+          class="font-cinzel font-black whitespace-nowrap text-[clamp(1.45rem,6.6vw,4.75rem)] tracking-[0.1em] sm:tracking-[0.16em] leading-none pulse-horror-glow select-none py-2 stage-3d"
         >
-          <span class="coming-soon-char">C</span><span class="coming-soon-char">O</span><span class="coming-soon-char">M</span><span class="coming-soon-char">I</span><span class="coming-soon-char">N</span><span class="coming-soon-char">G</span><span class="inline-block w-4 sm:w-8"></span><span class="coming-soon-char text-ember">S</span><span class="coming-soon-char text-ember">O</span><span class="coming-soon-char text-ember">O</span><span class="coming-soon-char text-ember">N</span>
+          <span class="coming-soon-char">C</span><span class="coming-soon-char">O</span><span class="coming-soon-char">M</span><span class="coming-soon-char">I</span><span class="coming-soon-char">N</span><span class="coming-soon-char">G</span><span class="inline-block w-2.5 sm:w-6"></span><span class="coming-soon-char text-ember">S</span><span class="coming-soon-char text-ember">O</span><span class="coming-soon-char text-ember">O</span><span class="coming-soon-char text-ember">N</span>
         </h2>
 
         <!-- Expanding Crimson Bloodline Divider -->
-        <div id="dl-divider" class="h-[2px] w-full max-w-md mx-auto bg-gradient-to-r from-transparent via-ember to-transparent shadow-[0_0_20px_#B91C22] scale-x-0"></div>
+        <div id="dl-divider" class="h-[2px] w-full max-w-xs sm:max-w-md mx-auto bg-gradient-to-r from-transparent via-ember to-transparent shadow-[0_0_20px_#B91C22] scale-x-0"></div>
 
-        <p id="dl-coming-soon-desc" class="text-bone/90 text-sm sm:text-base max-w-xl mx-auto leading-relaxed opacity-0">
+        <p id="dl-coming-soon-desc" class="text-bone/90 text-xs sm:text-base max-w-xl mx-auto leading-relaxed px-2 opacity-0">
           The standalone Windows PC build of <strong class="text-white">The Last Shift</strong> is currently sealed inside the <strong class="text-white">OmNexis-X</strong> vault. Follow our official Instagram dispatch to witness the final reveals before the shift begins.
         </p>
 
-        <div id="dl-actions" class="pt-3 flex flex-wrap items-center justify-center gap-4 opacity-0">
+        <div id="dl-actions" class="pt-2 sm:pt-3 flex flex-col sm:flex-row items-center justify-center gap-2.5 sm:gap-4 px-4 opacity-0">
           <a
             href="https://www.instagram.com/omnexis_x"
             target="_blank"
             rel="noopener noreferrer"
-            class="btn-horror rounded"
+            class="btn-horror !py-3 sm:!py-3.5 !text-[10px] sm:!text-xs rounded w-full sm:w-auto"
           >
             <svg class="w-4 h-4 text-ember relative z-10"><use href="#icon-instagram"></use></svg>
             <span class="relative z-10">Follow @omnexis_x For Release</span>
@@ -1073,7 +1492,7 @@
           <button
             type="button"
             onclick="closeDownloadModal()"
-            class="btn-horror-ghost rounded cursor-pointer"
+            class="btn-horror-ghost !py-3 sm:!py-3.5 !text-[10px] sm:!text-xs rounded cursor-pointer w-full sm:w-auto"
           >
             <span>Return To Showcase</span>
           </button>
@@ -1092,122 +1511,98 @@
     document.addEventListener('DOMContentLoaded', () => {
       gsap.registerPlugin(ScrollTrigger);
 
-      // 1. Hero 3D Entrance Unfold
-      gsap.fromTo('.hero-3d-text',
-        { opacity: 0, y: 55, z: -120, rotateX: 18, rotateY: 8 },
-        { opacity: 1, y: 0, z: 0, rotateX: 0, rotateY: 0, duration: 1.25, ease: 'power3.out' }
-      );
+      const mm = gsap.matchMedia();
 
-      gsap.fromTo('.hero-3d-poster',
-        { opacity: 0, y: 70, z: -180, rotateY: -26, rotateX: 14, scale: 0.9 },
-        { opacity: 1, y: 0, z: 0, rotateY: 0, rotateX: 0, scale: 1, duration: 1.4, ease: 'power3.out', delay: 0.15 }
-      );
+      // ====================================================
+      // DESKTOP GSAP ANIMATIONS (100% UNCHANGED)
+      // ====================================================
+      mm.add('(min-width: 1024px)', () => {
+        // 1. Hero 3D Entrance Unfold
+        gsap.fromTo('.hero-3d-text',
+          { opacity: 0, y: 55, z: -120, rotateX: 18, rotateY: 8 },
+          { opacity: 1, y: 0, z: 0, rotateX: 0, rotateY: 0, duration: 1.25, ease: 'power3.out' }
+        );
 
-      // 2. Hero 3D Scroll Parallax
-      gsap.to('.hero-3d-poster', {
-        rotateY: 16,
-        rotateX: -12,
-        y: -45,
-        z: 60,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '#hero',
-          start: 'top top',
-          end: 'bottom top',
-          scrub: 1.2
-        }
-      });
+        gsap.fromTo('.hero-3d-poster',
+          { opacity: 0, y: 70, z: -180, rotateY: -26, rotateX: 14, scale: 0.9 },
+          { opacity: 1, y: 0, z: 0, rotateY: 0, rotateX: 0, scale: 1, duration: 1.4, ease: 'power3.out', delay: 0.15 }
+        );
 
-      gsap.to('.hero-3d-text', {
-        y: -35,
-        rotateX: 10,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '#hero',
-          start: 'top top',
-          end: 'bottom top',
-          scrub: 1.2
-        }
-      });
-
-      // 3. Frosted Metadata Bar 3D Flip-In
-      gsap.fromTo('.scroll-3d-specs',
-        { opacity: 0, y: 50, rotateX: -35, z: -100, transformOrigin: '50% 0%' },
-        {
-          opacity: 1,
-          y: 0,
-          rotateX: 0,
-          z: 0,
-          duration: 1.1,
-          ease: 'power3.out',
+        // 2. Hero 3D Scroll Parallax
+        gsap.to('.hero-3d-poster', {
+          rotateY: 16,
+          rotateX: -12,
+          y: -45,
+          z: 60,
+          ease: 'none',
           scrollTrigger: {
-            trigger: '.scroll-3d-specs',
-            start: 'top 92%',
-            toggleActions: 'play none none reverse'
+            trigger: '#hero',
+            start: 'top top',
+            end: 'bottom top',
+            scrub: 1.2
           }
-        }
-      );
+        });
 
-      // 4. Section Headers 3D Perspective Unfold on Scroll
-      gsap.utils.toArray('.scroll-3d-header').forEach((header) => {
-        gsap.fromTo(header,
-          { opacity: 0, y: 60, z: -90, rotateX: 25, transformOrigin: '50% 100%' },
+        gsap.to('.hero-3d-text', {
+          y: -35,
+          rotateX: 10,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '#hero',
+            start: 'top top',
+            end: 'bottom top',
+            scrub: 1.2
+          }
+        });
+
+        // 3. Frosted Metadata Bar 3D Flip-In
+        gsap.fromTo('.scroll-3d-specs',
+          { opacity: 0, y: 50, rotateX: -35, z: -100, transformOrigin: '50% 0%' },
           {
             opacity: 1,
             y: 0,
-            z: 0,
             rotateX: 0,
-            duration: 1.05,
+            z: 0,
+            duration: 1.1,
             ease: 'power3.out',
             scrollTrigger: {
-              trigger: header,
-              start: 'top 85%',
+              trigger: '.scroll-3d-specs',
+              start: 'top 92%',
               toggleActions: 'play none none reverse'
             }
           }
         );
-      });
 
-      // 5. 3D Pillar Cards Scroll Animation
-      gsap.fromTo('.scroll-3d-card',
-        {
-          opacity: 0,
-          y: 100,
-          z: -160,
-          rotateX: 32,
-          rotateY: -16,
-          scale: 0.88,
-          transformOrigin: '50% 100%'
-        },
-        {
-          opacity: 1,
-          y: 0,
-          z: 0,
-          rotateX: 0,
-          rotateY: 0,
-          scale: 1,
-          duration: 1.15,
-          stagger: 0.16,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: '#the-last-shift',
-            start: 'top 72%',
-            toggleActions: 'play none none reverse'
-          }
-        }
-      );
+        // 4. Section Headers 3D Perspective Unfold on Scroll
+        gsap.utils.toArray('.scroll-3d-header').forEach((header) => {
+          gsap.fromTo(header,
+            { opacity: 0, y: 60, z: -90, rotateX: 25, transformOrigin: '50% 100%' },
+            {
+              opacity: 1,
+              y: 0,
+              z: 0,
+              rotateX: 0,
+              duration: 1.05,
+              ease: 'power3.out',
+              scrollTrigger: {
+                trigger: header,
+                start: 'top 85%',
+                toggleActions: 'play none none reverse'
+              }
+            }
+          );
+        });
 
-      // 6. 3D Media Screenshot Cards Scroll Animation
-      gsap.utils.toArray('.scroll-3d-media').forEach((card, i) => {
-        const startRotY = i % 2 === 0 ? 22 : -22;
-        gsap.fromTo(card,
+        // 5. 3D Pillar Cards Scroll Animation
+        gsap.fromTo('.scroll-3d-card',
           {
             opacity: 0,
-            y: 110,
-            z: -150,
-            rotateX: 26,
-            rotateY: startRotY,
-            scale: 0.9
+            y: 100,
+            z: -160,
+            rotateX: 32,
+            rotateY: -16,
+            scale: 0.88,
+            transformOrigin: '50% 100%'
           },
           {
             opacity: 1,
@@ -1217,41 +1612,112 @@
             rotateY: 0,
             scale: 1,
             duration: 1.15,
+            stagger: 0.16,
             ease: 'power3.out',
             scrollTrigger: {
-              trigger: card,
-              start: 'top 86%',
+              trigger: '#the-last-shift',
+              start: 'top 72%',
               toggleActions: 'play none none reverse'
             }
           }
         );
+
+        // 6. 3D Media Screenshot Cards Scroll Animation
+        gsap.utils.toArray('.scroll-3d-media').forEach((card, i) => {
+          const startRotY = i % 2 === 0 ? 22 : -22;
+          gsap.fromTo(card,
+            {
+              opacity: 0,
+              y: 110,
+              z: -150,
+              rotateX: 26,
+              rotateY: startRotY,
+              scale: 0.9
+            },
+            {
+              opacity: 1,
+              y: 0,
+              z: 0,
+              rotateX: 0,
+              rotateY: 0,
+              scale: 1,
+              duration: 1.15,
+              ease: 'power3.out',
+              scrollTrigger: {
+                trigger: card,
+                start: 'top 86%',
+                toggleActions: 'play none none reverse'
+              }
+            }
+          );
+        });
+
+        // 7. Large Feature Cards (Studio & Community) 3D Scroll Reveal
+        gsap.utils.toArray('.scroll-3d-Feature').forEach((block) => {
+          gsap.fromTo(block,
+            {
+              opacity: 0,
+              y: 100,
+              z: -140,
+              rotateX: 24,
+              scale: 0.92
+            },
+            {
+              opacity: 1,
+              y: 0,
+              z: 0,
+              rotateX: 0,
+              scale: 1,
+              duration: 1.2,
+              ease: 'power3.out',
+              scrollTrigger: {
+                trigger: block,
+                start: 'top 82%',
+                toggleActions: 'play none none reverse'
+              }
+            }
+          );
+        });
       });
 
-      // 7. Large Feature Cards (Studio & Community) 3D Scroll Reveal
-      gsap.utils.toArray('.scroll-3d-Feature').forEach((block) => {
-        gsap.fromTo(block,
-          {
-            opacity: 0,
-            y: 100,
-            z: -140,
-            rotateX: 24,
-            scale: 0.92
-          },
-          {
-            opacity: 1,
-            y: 0,
-            z: 0,
-            rotateX: 0,
-            scale: 1,
-            duration: 1.2,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: block,
-              start: 'top 82%',
-              toggleActions: 'play none none reverse'
-            }
-          }
+      // ====================================================
+      // DEDICATED MOBILE UI 3D ANIMATIONS (< 1024px)
+      // ====================================================
+      mm.add('(max-width: 1023px)', () => {
+        gsap.fromTo('.m-hero-anim',
+          { opacity: 0, y: 35, rotateX: 16, scale: 0.94 },
+          { opacity: 1, y: 0, rotateX: 0, scale: 1, duration: 0.95, stagger: 0.12, ease: 'power3.out' }
         );
+
+        gsap.utils.toArray('.m-scroll-reveal').forEach((el) => {
+          gsap.fromTo(el,
+            { opacity: 0, y: 45, rotateX: 18, scale: 0.94 },
+            {
+              opacity: 1,
+              y: 0,
+              rotateX: 0,
+              scale: 1,
+              duration: 0.9,
+              ease: 'power3.out',
+              scrollTrigger: {
+                trigger: el,
+                start: 'top 90%',
+                toggleActions: 'play none none reverse'
+              }
+            }
+          );
+        });
+
+        // Touch-Reactive 3D Tilt for Mobile Cards
+        document.querySelectorAll('.mobile-touch-tilt').forEach((card) => {
+          gsap.set(card, { transformPerspective: 1200 });
+          card.addEventListener('touchstart', () => {
+            gsap.to(card, { scale: 0.97, rotateX: 4, duration: 0.25, ease: 'power2.out' });
+          }, { passive: true });
+          card.addEventListener('touchend', () => {
+            gsap.to(card, { scale: 1, rotateX: 0, duration: 0.45, ease: 'back.out(1.5)' });
+          }, { passive: true });
+        });
       });
 
       // 8. Hardware-Optimized 3D Mouse Tilt using gsap.quickTo()
